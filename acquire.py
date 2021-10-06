@@ -47,3 +47,14 @@ def read_csv(url):
     """
     df = pd.read_csv(url)
     return df
+
+
+def get_merged_retail():
+    df1 = get_retail_df("https://python.zgulde.net/api/v1/items", "items")
+    df2 = get_retail_df("https://python.zgulde.net/api/v1/sales", "sales")
+    df3 = get_retail_df("https://python.zgulde.net/api/v1/stores", "stores")
+    
+    first_merge = merge_dfs(df1, "item_id", df2, "item", "outer")
+    df = merge_dfs(first_merge, "store", df3, "store_id", "outer")
+
+    return df
