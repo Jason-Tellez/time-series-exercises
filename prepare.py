@@ -1,8 +1,19 @@
 import pandas as pd
 import numpy as np
+import requests
 
+from datetime import timedelta, datetime
 
-def prep_sales(df=df, date_index='sale_date'):
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# no yelling in the library
+import warnings
+warnings.filterwarnings("ignore")
+
+import acquire as a
+
+def prep_sales(df, date_index):
     df = df.assign(date = pd.to_datetime(df[date_index])).\
     assign(df.set_index(date_index).sort_index())
     
@@ -13,7 +24,7 @@ def prep_sales(df=df, date_index='sale_date'):
     return df
 
 
-def prep_germ(df=df, date_index='Date'):
+def prep_germ(df, date_index):
     df.Date= pd.to_datetime(df.Date)
     df = df.set_index('Date').sort_index()
     df['year'] = df.index.year
